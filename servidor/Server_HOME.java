@@ -16,7 +16,6 @@ public class Server_HOME
 
 	public Server_HOME(int puerto, int tam_buff)
 	{
-		bufferRecepcion = new byte[tam_buff];
 		this.puerto = puerto;
 
 		try{
@@ -42,8 +41,10 @@ public class Server_HOME
 	{
 		Server_HOME servidor = new Server_HOME(8082, 150); //Creamos un servidor en el puerto 8082 con tamaño del buffer de 150 BYTES.
 		Home instancia; //Representa una instancia del servidor que será manejada por una hebra
-
+		CuentasUsuario acounts= new CuentasUsuario("./cuentas"); //Generamos las cuentas de usuario que administrará el servidor, dichas cuentas se encuentran en el fichero "cuentas"
 		
+
+
 		do{
 			try{
 				//El servidor se queda bloqueado escuchando en el puerto
@@ -56,7 +57,7 @@ public class Server_HOME
 
 				//CREAMOS UN THREAD PARA CADA CLIENTE QUE SE QUIERA CONECTAR CON EL SERVIDOR.
 				//Cada thread tendrá una comunicación distinta con un cliente distinto...
-				instancia = new Home(servidor.comunicacion, servidor.comunicacion.getRemoteSocketAddress().toString());
+				instancia = new Home(servidor.comunicacion, servidor.comunicacion.getRemoteSocketAddress().toString(), acounts);
 
 				instancia.start();//iniciamos la instancia del servidor en una hebra
 
