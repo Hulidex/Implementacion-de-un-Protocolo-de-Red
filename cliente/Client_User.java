@@ -16,6 +16,7 @@ public class Client_User
 	private Socket comunicacion; //Representa el socket comunicación entre el HOME y el Usuario
 	private OutputStream toHome; //Canal por el que se envían mensajes al HOME
 	private InputStream  fromHome; //canal por el que se reciben mensajes del HOME
+	public int tam_buffer;
 
 
 
@@ -23,6 +24,7 @@ public class Client_User
 	{
 		this.hostIP = hostIP;
 		this.puertoServ = puertoServ;
+		this.tam_buffer = tam_buffer;
 		bufferRecepcion = new byte[tam_buffer];
 		
 
@@ -69,31 +71,41 @@ public class Client_User
 
 	public static void main (String argvs[])
 	{
-		Client_User usuario = new Client_User("23.2.97.6", 8082, 150);//Creamos el cliente usuario...
+		Client_User usuario = new Client_User("23.2.97.6", 8082, 300);//Creamos el cliente usuario...
 		InputStreamReader std_in = new InputStreamReader(System.in);//Para poder leer caracteres de la entrada estandar
 		BufferedReader leer_teclado = new BufferedReader(std_in);//Para poder leer cadenas de texto de la entrada estandar
 		String lineaTeclado = null;
+		String mensajeServ = null;
 
 
 		
 
 		do{
+
+			System.out.print(usuario.hostIP + ":" + usuario.puertoServ + "$ ");//Vamos a pintar un prompt del servidor muy friki.
+			System.out.flush();
+
 			try{
+				//MANDAMOS PETICIÓN AL SERVIDOR
 				lineaTeclado = leer_teclado.readLine();
 				lineaTeclado = lineaTeclado.toUpperCase().trim();//transformamos a Mayusculas y quitamos los espacios del principio y el final
-			}catch(IOException err_read_teclado){
-				System.err.println("Error al leer una linea del teclado");
-			}
-			
-			usuario.bufferEnvio = lineaTeclado.getBytes();
-			
-			try{
+
+				usuario.bufferEnvio = lineaTeclado.getBytes();
+
 				usuario.toHome.write(usuario.bufferEnvio,0,usuario.bufferEnvio.length);
 				usuario.toHome.flush();
-			}catch(IOException err_write){
-				System.err.println("Error al escribir un mensaje para el servidor.");
+
+
+				//RECIBIMOS RESPUESTA DEL SERVIDOR
+				usuario.bufferRecepcion = new byte[usuario.tam_buffer];
+				usuario.fromHome.read(usuario.bufferRecepcion);
+				mensajeServ = "Serv: " + new String(usuario.bufferRecepcion);
+
+				System.out.println(mensajeServ);
+			}catch(Exception e){
+				e.printStackTrace();
 			}
-		}while(lineaTeclado.compareTo("EXIT") != 0);
+		}while(!mensajeServ.matches("(.*)BYE(.*)"));//cerramos la comunicación cuando obtenemos el mensaje de BYE del servidor
 		
 
 		usuario.cerrarComunicacion();
