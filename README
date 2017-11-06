@@ -1,0 +1,10 @@
+Pequeña práctica para la asignatura de Fundamentos de redes del 3º curso de Ingeniería informática
+en la universidad de Granda,realizada en un par de semanas.
+
+El objetivo de la práctica es el diseño de un protocolo de Aplicación donde se plasme una interacción
+cliente servidor. 
+
+En mi caso mi protocolo de aplicación aborda de forma muy simplificada el problema de comunicación de un 
+usuario con un servidor central que hace de controlador de una casa inteligente, dicho servidor es el 
+encargado de atender las peticiones del usuario (que juega el rol de cliente) y controlar unos dispositivos
+conectados al servidor. Para más información leer la documentación encontrada en Documentacion/Documentacion.pdf

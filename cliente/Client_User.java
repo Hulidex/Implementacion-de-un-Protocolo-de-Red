@@ -71,7 +71,7 @@ public class Client_User
 
 	public static void main (String argvs[])
 	{
-		Client_User usuario = new Client_User("23.2.97.6", 8082, 300);//Creamos el cliente usuario...
+		Client_User usuario = new Client_User("127.0.0.1", 8082, 300);//Creamos el cliente usuario...
 		InputStreamReader std_in = new InputStreamReader(System.in);//Para poder leer caracteres de la entrada estandar
 		BufferedReader leer_teclado = new BufferedReader(std_in);//Para poder leer cadenas de texto de la entrada estandar
 		String lineaTeclado = null;

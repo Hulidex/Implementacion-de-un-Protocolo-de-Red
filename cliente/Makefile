@@ -5,5 +5,9 @@
 # Correo: joluizquierdo@correo.ugr.es
 #########################################################
 
+compile:
+	javac Client_User.java
+
+
 clean:
 	rm -rfv *.class

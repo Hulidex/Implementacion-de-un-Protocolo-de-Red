@@ -347,7 +347,7 @@ public class Home extends Thread
 										}
 										else Send(new Mensaje("SUCCESS_QUER"), "El cierre de la ventana no se encuentra activo.");
 									}
-									else Send(new Mensaje("FAIL_MOD"), "Dispositivo " + recibido.args[0] + " no reconocido. Los dispositivos reconocidos CON CIERRE son:\n{Puerta,Ventana}");
+									else Send(new Mensaje("FAIL_QUER"), "Dispositivo " + recibido.args[0] + " no reconocido. Los dispositivos reconocidos CON CIERRE son:\n{Puerta,Ventana}");
 								}
 								else Send(new Mensaje("FAIL_QUER"), "Número erroneo de parámetros, no se realizó modificación.");
 							}
